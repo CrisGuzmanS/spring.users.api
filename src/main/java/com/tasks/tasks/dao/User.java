@@ -16,8 +16,8 @@ public class User implements com.tasks.tasks.dao.interfaces.User {
     private EntityManager entityManager;
 
     @Override
-    public List<com.tasks.tasks.dao.interfaces.User> users() {
-        throw new UnsupportedOperationException("Unimplemented method 'users'");
+    public List<com.tasks.tasks.models.User> users() {
+        return entityManager.createQuery("FROM User", com.tasks.tasks.models.User.class).getResultList();
     }
 
 }
