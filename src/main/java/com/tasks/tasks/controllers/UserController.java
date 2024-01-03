@@ -18,7 +18,7 @@ public class UserController {
 
     @RequestMapping(value = "api/users")
     public List<User> users() {
-        return user.users();
+        return user.get();
     }
 
     @RequestMapping(value = "api/users/{id}")

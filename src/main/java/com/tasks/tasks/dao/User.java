@@ -16,7 +16,7 @@ public class User implements com.tasks.tasks.dao.interfaces.User {
     private EntityManager entityManager;
 
     @Override
-    public List<com.tasks.tasks.models.User> users() {
+    public List<com.tasks.tasks.models.User> get() {
         return entityManager.createQuery("FROM User", com.tasks.tasks.models.User.class).getResultList();
     }
 
