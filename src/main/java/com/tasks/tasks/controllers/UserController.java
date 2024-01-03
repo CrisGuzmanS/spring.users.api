@@ -23,15 +23,10 @@ public class UserController {
 
     @RequestMapping(value = "api/users/{id}")
     public User user(@PathVariable Long id) {
-
-        User user = new User();
-        user.setId(id);
-        user.setName("Cristian Guzmán");
-
-        return user;
+        return user.find(id);
     }
 
-    @RequestMapping(value = "api/users", method = RequestMethod.DELETE)
+    @RequestMapping(value = "api/users/{id}", method = RequestMethod.DELETE)
     public void deleteUsers(@PathVariable Long id) {
         user.delete(id);
     }
