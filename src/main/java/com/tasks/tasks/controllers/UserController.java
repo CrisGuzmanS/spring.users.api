@@ -21,6 +21,11 @@ public class UserController {
         return user.get();
     }
 
+    @RequestMapping(value = "api/users", method = RequestMethod.POST)
+    public List<User> createUser() {
+        return user.get();
+    }
+
     @RequestMapping(value = "api/users/{id}")
     public User user(@PathVariable Long id) {
         return user.find(id);
