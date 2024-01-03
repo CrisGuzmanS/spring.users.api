@@ -4,4 +4,6 @@ import java.util.List;
 
 public interface User {
     List<com.tasks.tasks.models.User> users();
+
+    void delete(Long id);
 }

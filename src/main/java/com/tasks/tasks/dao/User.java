@@ -20,4 +20,9 @@ public class User implements com.tasks.tasks.dao.interfaces.User {
         return entityManager.createQuery("FROM User", com.tasks.tasks.models.User.class).getResultList();
     }
 
+    @Override
+    public void delete(Long id) {
+        com.tasks.tasks.models.User user = entityManager.find(com.tasks.tasks.models.User.class, id);
+        entityManager.remove(user);
+    }
 }
