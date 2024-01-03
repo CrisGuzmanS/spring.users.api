@@ -1,6 +1,5 @@
 package com.tasks.tasks.controllers;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,17 +17,7 @@ public class UserController {
 
     @RequestMapping(value = "users")
     public List<User> users() {
-        ArrayList<User> users = new ArrayList<>();
-
-        User user = new User();
-        user.setId(1L);
-        users.add(user);
-
-        user = new User();
-        user.setId(2L);
-        users.add(user);
-
-        return users;
+        return user.users();
     }
 
     @RequestMapping(value = "users/{id}")
