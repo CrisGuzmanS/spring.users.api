@@ -1,6 +1,7 @@
 package com.tasks.tasks.models;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,6 +10,7 @@ import lombok.Setter;
 public class User {
     @Getter
     @Setter
+    @Id
     @Column(name = "id")
     private Long id;
 
