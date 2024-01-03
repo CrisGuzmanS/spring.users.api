@@ -15,12 +15,12 @@ public class UserController {
     @Autowired
     private com.tasks.tasks.dao.User user;
 
-    @RequestMapping(value = "users")
+    @RequestMapping(value = "api/users")
     public List<User> users() {
         return user.users();
     }
 
-    @RequestMapping(value = "users/{id}")
+    @RequestMapping(value = "api/users/{id}")
     public User user(@PathVariable Long id) {
 
         User user = new User();
