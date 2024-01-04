@@ -16,4 +16,8 @@ public class EncryptorService {
     public String encrypt(String text) {
         return this.encryptor.hash(1, 1024, 1, text);
     }
+
+    public boolean verify(String hash, String text) {
+        return this.encryptor.verify(hash, text);
+    }
 }
