@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tasks.tasks.models.User;
 
+import jakarta.servlet.http.HttpServletResponse;
+
 @RestController
 public class AuthController {
 
@@ -15,8 +17,13 @@ public class AuthController {
     private com.tasks.tasks.dao.User user;
 
     @RequestMapping(value = "api/login", method = RequestMethod.POST)
-    public void login(@RequestBody User user) {
-        
+    public void login(@RequestBody User requestedUser, HttpServletResponse response) {
+        if (!user.verify(requestedUser)) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
+        }
+
+        response.setStatus(HttpServletResponse.SC_OK);
     }
 
 }
