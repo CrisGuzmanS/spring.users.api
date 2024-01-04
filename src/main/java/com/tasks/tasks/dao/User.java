@@ -36,10 +36,9 @@ public class User implements com.tasks.tasks.dao.interfaces.User {
 
     public boolean verify(com.tasks.tasks.models.User user) {
         List<com.tasks.tasks.models.User> foundUsers = entityManager
-                .createQuery("FROM User WHERE email = :email AND password = :password",
+                .createQuery("FROM User WHERE email = :email",
                         com.tasks.tasks.models.User.class)
                 .setParameter("email", user.getEmail())
-                .setParameter("password", user.getPassword())
                 .getResultList();
 
         return !foundUsers.isEmpty();
