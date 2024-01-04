@@ -24,6 +24,10 @@ public class User implements com.tasks.tasks.dao.interfaces.User {
         return entityManager.find(com.tasks.tasks.models.User.class, id);
     }
 
+    public void create(com.tasks.tasks.models.User user) {
+        entityManager.persist(user);
+    }
+
     @Override
     public void delete(Long id) {
         com.tasks.tasks.models.User user = entityManager.find(com.tasks.tasks.models.User.class, id);
