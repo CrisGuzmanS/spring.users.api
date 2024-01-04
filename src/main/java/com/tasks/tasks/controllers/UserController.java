@@ -10,12 +10,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tasks.tasks.models.User;
+import com.tasks.tasks.services.EncryptorService;
 
 @RestController
 public class UserController {
 
     @Autowired
     private com.tasks.tasks.dao.User user;
+
+    @Autowired
+    private EncryptorService encryptor;
 
     @RequestMapping(value = "api/users")
     public List<User> users() {
@@ -24,6 +28,9 @@ public class UserController {
 
     @RequestMapping(value = "api/users", method = RequestMethod.POST)
     public void createUser(@RequestBody User newUser) {
+
+        newUser.setPassword(encryptor.encrypt(newUser.getPassword()));
+
         user.create(newUser);
     }
 
