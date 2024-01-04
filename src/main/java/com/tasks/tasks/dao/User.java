@@ -35,13 +35,13 @@ public class User implements com.tasks.tasks.dao.interfaces.User {
     }
 
     public boolean verify(com.tasks.tasks.models.User user) {
-        com.tasks.tasks.models.User foundUser = entityManager
+        List<com.tasks.tasks.models.User> foundUsers = entityManager
                 .createQuery("FROM User WHERE email = :email AND password = :password",
                         com.tasks.tasks.models.User.class)
                 .setParameter("email", user.getEmail())
                 .setParameter("password", user.getPassword())
-                .getSingleResult();
+                .getResultList();
 
-        return foundUser != null;
+        return !foundUsers.isEmpty();
     }
 }
