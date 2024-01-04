@@ -6,4 +6,6 @@ public interface User {
     List<com.tasks.tasks.models.User> get();
 
     void delete(Long id);
+
+    boolean verify(String email, String password);
 }
