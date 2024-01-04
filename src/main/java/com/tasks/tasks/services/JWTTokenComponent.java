@@ -45,10 +45,10 @@ public class JWTTokenComponent {
 
         JwtBuilder builder = Jwts
                 .builder()
-                .setId(id)
-                .setIssuedAt(now)
-                .setSubject(subject)
-                .setIssuer(issuer)
+                .id(String.valueOf(id))
+                .issuedAt(now)
+                .subject(subject)
+                .issuer(issuer)
                 .signWith(signatureAlgorithm, signingKey);
 
         if (ttlMillis >= 0) {
