@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tasks.tasks.exceptions.InvalidCredentialsException;
 import com.tasks.tasks.models.User;
+import com.tasks.tasks.services.ResponseService;
 import com.tasks.tasks.services.UserService;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -18,14 +19,23 @@ public class AuthController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ResponseService responseService;
+
     @RequestMapping(value = "api/login", method = RequestMethod.POST)
     public String login(@RequestBody User requestedUser, HttpServletResponse response) {
 
         try {
-            return userService.login(requestedUser);
+            return responseService
+                    .status(200)
+                    .message(userService.login(requestedUser))
+                    .toJson();
         } catch (InvalidCredentialsException e) {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-            return e.getMessage();
+            return responseService
+                    .status(HttpServletResponse.SC_UNAUTHORIZED)
+                    .message(e.getMessage())
+                    .toJson();
         }
     }
 
