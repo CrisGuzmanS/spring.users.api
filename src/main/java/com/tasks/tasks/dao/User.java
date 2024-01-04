@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tasks.tasks.exceptions.InvalidCredentialsException;
 import com.tasks.tasks.services.EncryptorService;
 
 import jakarta.persistence.EntityManager;
@@ -30,6 +31,20 @@ public class User implements com.tasks.tasks.dao.interfaces.User {
         return entityManager.find(com.tasks.tasks.models.User.class, id);
     }
 
+    public com.tasks.tasks.models.User find(String email) {
+        List<com.tasks.tasks.models.User> foundUsers = entityManager
+                .createQuery("FROM User WHERE email = :email",
+                        com.tasks.tasks.models.User.class)
+                .setParameter("email", email)
+                .getResultList();
+
+        if (foundUsers.isEmpty()) {
+            return null;
+        }
+
+        return foundUsers.get(0);
+    }
+
     public void create(com.tasks.tasks.models.User user) {
         entityManager.persist(user);
     }
@@ -40,19 +55,16 @@ public class User implements com.tasks.tasks.dao.interfaces.User {
         entityManager.remove(user);
     }
 
-    public boolean verify(com.tasks.tasks.models.User user) {
-        List<com.tasks.tasks.models.User> foundUsers = entityManager
-                .createQuery("FROM User WHERE email = :email",
-                        com.tasks.tasks.models.User.class)
-                .setParameter("email", user.getEmail())
-                .getResultList();
+    public boolean verify(com.tasks.tasks.models.User user) throws InvalidCredentialsException {
+        com.tasks.tasks.models.User foundUser = this.find(user.getEmail());
 
-        if (foundUsers.isEmpty()) {
-            return false;
+        if (null == foundUser) {
+            throw new InvalidCredentialsException(
+                    "Las credenciales del usuario no pudieron ser verificadas");
         }
 
         return this.encryptor.verify(
-                foundUsers.get(0).getPassword(),
+                foundUser.getPassword(),
                 user.getPassword());
     }
 }

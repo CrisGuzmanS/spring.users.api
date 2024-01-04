@@ -4,10 +4,10 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-
-import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
 import java.util.Date;
@@ -33,15 +33,10 @@ public class JWTTokenComponent {
      * @param subject
      * @return
      */
-    public String create(String id, String subject) {
-
-        SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
+    public String create(Long id, String subject) {
 
         long nowMillis = System.currentTimeMillis();
         Date now = new Date(nowMillis);
-
-        byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(key);
-        Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
 
         JwtBuilder builder = Jwts
                 .builder()
@@ -49,15 +44,20 @@ public class JWTTokenComponent {
                 .issuedAt(now)
                 .subject(subject)
                 .issuer(issuer)
-                .signWith(signatureAlgorithm, signingKey);
+                .signWith(getSigningKey());
 
         if (ttlMillis >= 0) {
             long expMillis = nowMillis + ttlMillis;
             Date exp = new Date(expMillis);
-            builder.setExpiration(exp);
+            builder.expiration(exp);
         }
 
         return builder.compact();
+    }
+
+    private Key getSigningKey() {
+        byte[] keyBytes = Decoders.BASE64.decode(this.key);
+        return Keys.hmacShaKeyFor(keyBytes);
     }
 
     /**

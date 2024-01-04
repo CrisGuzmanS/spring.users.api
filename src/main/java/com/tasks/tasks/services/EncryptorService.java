@@ -2,6 +2,8 @@ package com.tasks.tasks.services;
 
 import org.springframework.stereotype.Service;
 
+import com.tasks.tasks.exceptions.InvalidCredentialsException;
+
 import de.mkammerer.argon2.Argon2;
 
 @Service
@@ -18,6 +20,10 @@ public class EncryptorService {
     }
 
     public boolean verify(String hash, String text) {
-        return this.encryptor.verify(hash, text);
+        if(!this.encryptor.verify(hash, text)) {
+            throw new InvalidCredentialsException("El has y el texto no coinciden.");
+        }
+
+        return true;
     }
 }
