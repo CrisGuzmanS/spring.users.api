@@ -1,5 +1,6 @@
 package com.tasks.tasks.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.tasks.tasks.models.User;
 import com.tasks.tasks.services.EncryptorService;
+import com.tasks.tasks.services.UserService;
 
 @RestController
 public class UserController {
@@ -22,8 +24,15 @@ public class UserController {
     @Autowired
     private EncryptorService encryptor;
 
+    @Autowired
+    private UserService userService;
+
     @RequestMapping(value = "api/users")
     public List<User> users(@RequestHeader("Authorization") String token) {
+            if (!userService.isLogged(token)) {
+                return new ArrayList<>();
+            }
+
         return user.get();
     }
 

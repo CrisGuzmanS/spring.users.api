@@ -7,7 +7,6 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
 import java.util.Date;
 
@@ -68,7 +67,7 @@ public class JWTTokenComponent {
     public String value(String jwt) {
         Claims claims = Jwts
                 .parser()
-                .setSigningKey(DatatypeConverter.parseBase64Binary(key))
+                .setSigningKey(getSigningKey())
                 .build()
                 .parseClaimsJws(jwt)
                 .getBody();
@@ -85,7 +84,7 @@ public class JWTTokenComponent {
     public String key(String jwt) {
         Claims claims = Jwts
                 .parser()
-                .setSigningKey(DatatypeConverter.parseBase64Binary(key))
+                .setSigningKey(getSigningKey())
                 .build()
                 .parseClaimsJws(jwt)
                 .getBody();

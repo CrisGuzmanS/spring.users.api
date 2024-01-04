@@ -26,4 +26,15 @@ public class UserService {
                 requiredUser.getId(),
                 requiredUser.getEmail());
     }
+
+    public boolean isLogged(String token) {
+
+        String id = jwt.key(token);
+
+        if (null == id) {
+            return false;
+        }
+
+        return true;
+    }
 }
