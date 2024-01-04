@@ -7,5 +7,5 @@ public interface User {
 
     void delete(Long id);
 
-    boolean verify(String email, String password);
+    boolean verify(com.tasks.tasks.models.User user);
 }
