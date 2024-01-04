@@ -34,14 +34,14 @@ public class User implements com.tasks.tasks.dao.interfaces.User {
         entityManager.remove(user);
     }
 
-    public boolean verify(String email, String password) {
-        com.tasks.tasks.models.User user = entityManager
+    public boolean verify(com.tasks.tasks.models.User user) {
+        com.tasks.tasks.models.User foundUser = entityManager
                 .createQuery("FROM User WHERE email = :email AND password = :password",
                         com.tasks.tasks.models.User.class)
-                .setParameter("email", email)
-                .setParameter("password", password)
+                .setParameter("email", user.getEmail())
+                .setParameter("password", user.getPassword())
                 .getSingleResult();
 
-        return user != null;
+        return foundUser != null;
     }
 }
