@@ -8,3 +8,5 @@
 
 3. Visit the url:
 `http://localhost:9090`
+
+4. Do the requests documented in `users.http` file.
