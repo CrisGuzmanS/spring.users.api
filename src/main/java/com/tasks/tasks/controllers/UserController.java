@@ -29,9 +29,9 @@ public class UserController {
 
     @RequestMapping(value = "api/users")
     public List<User> users(@RequestHeader("Authorization") String token) {
-            if (!userService.isLogged(token)) {
-                return new ArrayList<>();
-            }
+        if (!userService.isLogged(token)) {
+            return new ArrayList<>();
+        }
 
         return user.get();
     }
