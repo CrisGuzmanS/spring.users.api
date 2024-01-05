@@ -1,0 +1,8 @@
+### POST Request para obtener el JWT
+POST http://127.0.0.1:9090/api/login
+Content-Type: application/json
+
+{
+  "email": "erick@mail.com",
+  "password": "123"
+}
